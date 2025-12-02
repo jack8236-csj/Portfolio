@@ -1,0 +1,2 @@
+/* small app-level reset used by older components */
+#root { max-width: 1280px; margin: 0 auto; padding: 0; }

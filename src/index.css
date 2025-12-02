@@ -1,0 +1,377 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================================================
+   THEME A — LIGHT MODE (DEFAULT)
+=========================================================== */
+:root {
+  --bg-1: #f5f7fa;
+  --bg-2: #eef1f5;
+
+  --card: rgba(255, 255, 255, 0.8);
+
+  --text-main: #1e293b;
+  --text-muted: #475569;
+
+  --accent-cyan: #06b6d4;
+  --accent-purple: #7c3aed;
+
+  --glass-border: rgba(0,0,0,0.08);
+}
+
+/* ===========================================================
+   DARK MODE — CYBER NEON
+=========================================================== */
+.dark {
+  --bg-1: #071026;
+  --bg-2: #081426;
+
+  --card: rgba(17, 24, 39, 0.6);
+
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+
+  --accent-cyan: #22d3ee;
+  --accent-purple: #7c3aed;
+
+  --glass-border: rgba(34,211,238,0.08);
+}
+
+/* ===========================================================
+   BASE PAGE FIXES
+=========================================================== */
+
+html, body, #root {
+  height: 100%;
+  min-height: 100%;
+  overflow-x: hidden; /* fix disappearing content when toggling theme */
+}
+
+body {
+  background: var(--bg-1);
+  color: var(--text-main);
+  font-family: Inter, ui-sans-serif, system-ui;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* improve rendering, prevent content "white block" flicker */
+* {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===========================================================
+   GLASS CARD
+=========================================================== */
+.glass {
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  transition: background 0.3s ease, border 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  border-radius: 16px;
+}
+
+.dark .glass {
+  box-shadow: 0 6px 30px rgba(2,8,23,0.6);
+}
+
+/* ===========================================================
+   ACCENT BUTTON
+=========================================================== */
+.btn-accent {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+  color: white;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.dark .btn-accent {
+  box-shadow: 0 6px 22px rgba(31,41,55,0.35), 0 0 28px rgba(34,211,238,0.06);
+}
+
+/* ===========================================================
+   SECONDARY BUTTON
+=========================================================== */
+.btn-secondary {
+  @apply inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold transition;
+
+  background: rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.12);
+  color: var(--text-main);
+}
+
+.btn-secondary:hover {
+  background: rgba(0,0,0,0.12);
+  color: var(--accent-cyan);
+}
+
+.dark .btn-secondary {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: white;
+}
+
+.dark .btn-secondary:hover {
+  background: rgba(255,255,255,0.18);
+  color: var(--accent-cyan);
+}
+
+/* ===========================================================
+   HEADINGS
+=========================================================== */
+h1, h2, h3 {
+  font-family: Montserrat, Inter, sans-serif;
+  color: var(--text-main);
+}
+
+.dark h1, .dark h2, .dark h3 {
+  color: var(--accent-cyan);
+}
+
+/* ===========================================================
+   TYPING CARET
+=========================================================== */
+.typing-caret::after {
+  content: "|";
+  margin-left: 6px;
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink { to { opacity: 0; } }
+
+/* ===========================================================
+   LOADER
+=========================================================== */
+.loader-wrap {
+  @apply fixed inset-0 flex items-center justify-center bg-black/60 z-50;
+}
+
+/* ===========================================================
+   IMAGES
+=========================================================== */
+.screen-img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ===========================================================
+   HELPERS
+=========================================================== */
+.kicker {
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+.neon-outline {
+  box-shadow: 
+    0 0 12px rgba(34,211,238,0.06),
+    inset 0 0 12px rgba(124,58,237,0.05);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+/* ===========================================================
+   NAV BAR
+=========================================================== */
+.nav-glass {
+  background: rgba(255,255,255,0.68);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.dark .nav-glass {
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+/* ===========================================================
+   HERO BACKGROUND (Tech Lines + Dots)
+=========================================================== */
+.hero-anim {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-anim .line {
+  position: absolute;
+  width: 2px;
+  height: 140%;
+  left: 50%;
+  top: -20%;
+  transform-origin: center;
+  background: linear-gradient(180deg, rgba(34,211,238,0.06), rgba(124,58,237,0.02));
+  filter: blur(6px);
+  opacity: 0.28;
+  mix-blend-mode: screen;
+  animation: floatLine 12s linear infinite;
+}
+
+.hero-anim .dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-cyan), rgba(34,211,238,0.4));
+  filter: drop-shadow(0 0 12px rgba(34,211,238,0.18));
+  opacity: 0.9;
+  animation: drift 10s linear infinite;
+}
+
+@keyframes floatLine {
+  0% { transform: translateX(-50%) translateY(-10%) rotate(0deg); opacity: 0.15; }
+  50% { transform: translateX(-45%) translateY(10%) rotate(8deg); opacity: 0.32; }
+  100% { transform: translateX(-55%) translateY(-10%) rotate(0deg); opacity: 0.15; }
+}
+
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0) scale(0.9); opacity: 0.95; }
+  50% { transform: translateY(-40vh) translateX(30vw) scale(1.15); opacity: 0.5; }
+  100% { transform: translateY(0) translateX(0) scale(0.9); opacity: 0.95; }
+}
+
+/* ===========================================================
+   GLOW CURSOR (Fixed + Improved)
+=========================================================== */
+.cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  transition: transform 0.09s linear, opacity 0.12s linear;
+  mix-blend-mode: screen;
+}
+
+/* Light mode glow */
+.cursor .core {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent-cyan);
+  box-shadow: 
+    0 0 14px rgba(34,211,238,0.9),
+    0 0 32px rgba(124,58,237,0.25);
+  transform: translate(-50%, -50%);
+}
+
+.cursor .ring {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: 1px solid rgba(34,211,238,0.12);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 30px rgba(34,211,238,0.06);
+}
+
+/* Hidden state */
+.cursor.hidden { opacity: 0; }
+
+/* Hover state */
+.cursor--hover .core {
+  transform: translate(-50%, -50%) scale(1.55);
+}
+
+.cursor--hover .ring {
+  transform: translate(-50%, -50%) scale(1.25);
+  border-color: rgba(34,211,238,0.25);
+}
+
+/* Dark Mode Glow Enhancements */
+.dark .cursor .core {
+  background: var(--accent-cyan);
+  box-shadow:
+    0 0 22px rgba(34,211,238,1),
+    0 0 40px rgba(124,58,237,0.5);
+}
+
+.dark .cursor .ring {
+  border-color: rgba(34,211,238,0.25);
+  box-shadow: 0 0 46px rgba(34,211,238,0.25);
+}
+
+/* ===========================================================
+   MODAL
+=========================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(1,6,13,0.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index: 2000;
+}
+
+.modal-card {
+  width: 90%;
+  max-width: 980px;
+  max-height: 88vh;
+  overflow: auto;
+  border-radius: 14px;
+  padding: 18px;
+
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.dark .modal-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 18px 60px rgba(2,6,23,0.7);
+}
+
+.modal-close {
+  position:absolute;
+  right: 18px;
+  top: 18px;
+  background: rgba(0,0,0,0.35);
+  width:36px;height:36px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  color: white;
+}
+
+.modal-media img,
+.modal-media video {
+  width: 100%;
+  border-radius: 10px;
+  display:block;
+}
+
+/* ===========================================================
+   SKILL TILE / TOOLTIP
+=========================================================== */
+.skills-tile {
+  transition: transform .16s ease, box-shadow .18s ease;
+}
+
+@media (max-width: 480px) {
+  .skills-tile { width: 56px; height: 56px; }
+}
+
+.skills-tooltip {
+  background: rgba(2,6,23,0.9);
+  color: #e6f9ff;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* ===========================================================
+   RESPONSIVE TWEAKS
+=========================================================== */
+@media (max-width: 768px) {
+  .modal-card { padding: 12px; }
+  .cursor .ring { display: none; }
+}
