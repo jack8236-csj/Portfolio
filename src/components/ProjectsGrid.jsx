@@ -13,16 +13,21 @@ export default function ProjectsGrid({ items = [] }) {
     setOpen(true);
     document.body.style.overflow = "hidden";
   };
+
   const closeProject = () => {
     setOpen(false);
     setTimeout(() => setSelected(null), 260);
     document.body.style.overflow = "";
   };
 
-  // small helper: detect video file
+  // helper to detect video links
   const isVideo = (url = "") => {
     try {
-      return url.toLowerCase().endsWith(".mp4") || url.toLowerCase().endsWith(".webm") || url.toLowerCase().endsWith(".ogg");
+      return (
+        url.toLowerCase().endsWith(".mp4") ||
+        url.toLowerCase().endsWith(".webm") ||
+        url.toLowerCase().endsWith(".ogg")
+      );
     } catch {
       return false;
     }
@@ -48,25 +53,27 @@ export default function ProjectsGrid({ items = [] }) {
 
             {/* CONTENT */}
             <div className="flex-1">
-              <h3 className="text-2xl font-semibold text-slate-900 dark:text-cyan-300">{p.title}</h3>
+              <h3 className="text-2xl font-semibold text-slate-900 dark:text-cyan-300">
+                {p.title}
+              </h3>
               <p className="mt-3 text-slate-700 dark:text-slate-300">{p.desc}</p>
 
               <div className="mt-4 flex flex-wrap gap-3">
                 {(p.tech || []).map((t, i) => (
-                  <span key={i} className="px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-slate-200 text-sm">
+                  <span
+                    key={i}
+                    className="px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-slate-200 text-sm"
+                  >
                     {t}
                   </span>
                 ))}
               </div>
 
-              <div className="mt-5 flex gap-3 items-center">
-                {/* If project has demo buttons */}
+              <div className="mt-5 flex gap-3 items-center flex-wrap">
+                {/* === PROJECT HAS DEMO BUTTONS === */}
                 {p.demoButtons?.length ? (
                   <>
-                    {/* First demo button handling:
-                        - if it points to a video file -> normal anchor (open in new tab)
-                        - otherwise -> open modal (same as earlier behaviour)
-                    */}
+                    {/* FIRST DEMO BUTTON — VIDEO CASE */}
                     {isVideo(p.demoButtons[0]?.link) ? (
                       <a
                         className="btn-accent"
@@ -77,40 +84,45 @@ export default function ProjectsGrid({ items = [] }) {
                         {p.demoButtons[0]?.label ?? "View Demo"}
                       </a>
                     ) : (
-                      <button className="btn-accent clickable" onClick={() => openProject(p)}>
+                      <button
+                        className="btn-accent clickable"
+                        onClick={() => openProject(p)}
+                      >
                         {p.demoButtons[0]?.label ?? "View Demo"}
                       </button>
                     )}
 
-                    {/* optional secondary button (Install APK or other) */}
+                    {/* SECONDARY BUTTON (Install APK) */}
                     {p.demoButtons[1] && (
                       <a
                         className="btn-secondary"
                         href={p.demoButtons[1].link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        // if it's an apk on same domain, allow browser to download
-                        {...(p.demoButtons[1].link.toLowerCase().endsWith(".apk") ? { download: true } : {})}
+                        {...(p.demoButtons[1].link.toLowerCase().endsWith(".apk")
+                          ? { download: true }
+                          : {})}
                       >
                         {p.demoButtons[1].label}
                       </a>
                     )}
 
-                    {/* If project has a repo url too, show it (non-blocking) */}
+                    {/* NEW — VIEW REPO BUTTON (now btn-secondary style) */}
                     {p.repo && (
                       <a
-                        className="px-3 py-2 rounded-md border border-white/10 text-sm text-gray-300 hover:text-cyan-300"
+                        className="btn-secondary"
                         href={p.repo}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Repo
+                        View Repo
                       </a>
                     )}
                   </>
                 ) : (
+                  /* === NO DEMO BUTTONS — SHOW REPO ONLY === */
                   <a
-                    className="px-3 py-2 rounded-md border border-white/10 text-sm text-gray-300 hover:text-cyan-300"
+                    className="btn-secondary"
                     href={p.repo ?? "#"}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -124,7 +136,7 @@ export default function ProjectsGrid({ items = [] }) {
         ))}
       </div>
 
-      {/* Modal */}
+      {/* MODAL */}
       <ProjectModal open={open} onClose={closeProject} project={selected} />
     </>
   );

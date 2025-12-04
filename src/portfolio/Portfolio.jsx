@@ -18,7 +18,7 @@ import attendanceImg from "../assets/attendance.jpeg";
 import catalogImg from "../assets/catalogue.png";
 import jmcImg from "../assets/JMC-logo.png";
 
-/* icons (react-icons) */
+/* icons */
 import {
   SiKotlin,
   SiTypescript,
@@ -42,7 +42,9 @@ import { FaJava, FaCode } from "react-icons/fa";
 export default function Portfolio() {
   const [loading, setLoading] = useState(true);
 
-  // ========== FEATURED PROJECTS ==========
+  // ================================================
+  // FEATURED PROJECTS
+  // ================================================
   const projects = [
     {
       title: "Sales Performance Tracker — Huachang Growmax (FYP)",
@@ -51,21 +53,32 @@ export default function Portfolio() {
       images: [locationImg],
       tech: ["Kotlin", "TypeScript", "Firebase", "Google Maps"],
       demoButtons: [
-        { label: "Introduction Video", link: "/videos/Sales Performance Tracker- Introduction Video.mp4" },
-        { label: "Install APK", link: "/downloads/TrackPointFYP.apk" }
-      ]
+        {
+          label: "Introduction Video",
+          link: "/videos/Sales Performance Tracker- Introduction Video.mp4"
+        },
+        {
+          label: "Install APK",
+          link: "/downloads/TrackPointFYP.apk"
+        }
+      ],
+      repo: "https://github.com/RobertLllllee/HuaChang" // <-- ADD YOUR ACTUAL REPO LINK HERE
     },
+
     {
       title: "SplashAquatics — Online Fish Store",
       desc:
         "Online e-commerce website built with Flask and MySQL Workbench. Includes catalog, authentication, seller dashboard and responsive UI.",
       images: [catalogImg],
       tech: ["Flask", "MySQL", "HTML/CSS", "JavaScript"],
-      demoButtons: []
+      demoButtons: [],
+      repo: "https://github.com/RobertLllllee/SplashAquatics" // optional but recommended
     }
   ];
 
-  // ========== SKILLS ==========
+  // ================================================
+  // SKILLS
+  // ================================================
   const skills = [
     { id: "kotlin", name: "Kotlin", Icon: SiKotlin, desc: "Primary Android app language." },
     { id: "typescript", name: "TypeScript", Icon: SiTypescript, desc: "Typed JavaScript for safer codebases." },
@@ -85,7 +98,9 @@ export default function Portfolio() {
     { id: "android", name: "Android Studio", Icon: SiAndroid, desc: "Android development IDE." }
   ];
 
-  // ========== WORK EXPERIENCE ==========
+  // ================================================
+  // WORK EXPERIENCE
+  // ================================================
   const experience = [
     {
       company: "JMC Fleet Management Sdn Bhd",
@@ -98,7 +113,6 @@ export default function Portfolio() {
     }
   ];
 
-  // skill modal state
   const [activeSkill, setActiveSkill] = useState(null);
 
   return (
@@ -127,7 +141,14 @@ export default function Portfolio() {
           <section id="screens" className="max-w-6xl mx-auto px-6 mt-14">
             <h2 className="text-3xl font-semibold kicker mb-6">Application Screenshots</h2>
             <ScreensGallery
-              images={[loginImg, dashboardImg, ordersImg, performanceImg, attendanceImg, locationImg]}
+              images={[
+                loginImg,
+                dashboardImg,
+                ordersImg,
+                performanceImg,
+                attendanceImg,
+                locationImg
+              ]}
             />
           </section>
 
@@ -138,10 +159,11 @@ export default function Portfolio() {
           </section>
         </main>
 
-        {/* Skill Modal */}
-        {activeSkill && <SkillModal skill={activeSkill} onClose={() => setActiveSkill(null)} />}
+        {/* SKILL MODAL */}
+        {activeSkill && (
+          <SkillModal skill={activeSkill} onClose={() => setActiveSkill(null)} />
+        )}
 
-        {/* FOOTER */}
         <Footer />
       </div>
     </>
