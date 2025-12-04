@@ -15,7 +15,7 @@ import dashboardImg from "../assets/dashboard.jpeg";
 import ordersImg from "../assets/orders.jpeg";
 import performanceImg from "../assets/performance.jpeg";
 import attendanceImg from "../assets/attendance.jpeg";
-import catalogImg from "../assets/catalogue.png";
+import homeImg from "../assets/Home.png";
 import jmcImg from "../assets/JMC-logo.png";
 
 /* icons */
@@ -69,7 +69,7 @@ export default function Portfolio() {
       title: "SplashAquatics — Online Fish Store",
       desc:
         "Online e-commerce website built with Flask and MySQL Workbench. Includes catalog, authentication, seller dashboard and responsive UI.",
-      images: [catalogImg],
+      images: [homeImg],
       tech: ["Flask", "MySQL", "HTML/CSS", "JavaScript"],
       demoButtons: [],
       repo: "https://github.com/RobertLllllee/SplashAquatics" // optional but recommended
