@@ -16,6 +16,7 @@ import ordersImg from "../assets/orders.jpeg";
 import performanceImg from "../assets/performance.jpeg";
 import attendanceImg from "../assets/attendance.jpeg";
 import homeImg from "../assets/Home.png";
+import trackpointImg from "../assets/TrackPoint.png";
 import jmcImg from "../assets/JMC-logo.png";
 
 /* icons */
@@ -50,7 +51,7 @@ export default function Portfolio() {
       title: "Sales Performance Tracker — Huachang Growmax (FYP)",
       desc:
         "Android app (Kotlin + Firebase + TypeScript) — order logging, product management, performance tracking, GPS attendance, role-based dashboards, PDF/Excel export and Google Sign-In Authentication.",
-      images: [locationImg],
+      images: [trackpointImg],
       tech: ["Kotlin", "TypeScript", "Firebase", "Google Maps"],
       demoButtons: [
         {

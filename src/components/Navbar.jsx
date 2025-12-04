@@ -19,7 +19,7 @@ export default function Navbar(){
             <a href="#projects" className="hover:text-cyan-500 dark:hover:text-cyan-300">Projects</a>
             <a href="#skills" className="hover:text-cyan-500 dark:hover:text-cyan-300">Skills</a>
             <a href="#screens" className="hover:text-cyan-500 dark:hover:text-cyan-300">Screens</a>
-            <a href="#contact" className="hover:text-cyan-500 dark:hover:text-cyan-300">Contact</a>
+            <a href="mailto:jackchung10@gmail.com" className="hover:text-cyan-500 dark:hover:text-cyan-300">Contact</a>
           </div>
         </div>
 
