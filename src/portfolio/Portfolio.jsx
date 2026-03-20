@@ -17,6 +17,7 @@ import performanceImg from "../assets/performance.jpeg";
 import attendanceImg from "../assets/attendance.jpeg";
 import homeImg from "../assets/Home.png";
 import trackpointImg from "../assets/TrackPoint.png";
+import cibcImg from "../assets/CIBC logo.jpg";
 import jmcImg from "../assets/JMC-logo.png";
 
 /* icons */
@@ -103,6 +104,15 @@ export default function Portfolio() {
   // WORK EXPERIENCE
   // ================================================
   const experience = [
+    {
+      company: "CIBC Technology Sdn Bhd",
+      role: "Software Development Intern",
+      period: "Dec 2025 - March 2026",
+      logo: cibcImg,
+      desc:
+        "Assisted in developing and maintaining web and mobile applications with Vue.js and Quasar Framework, supported backend API development and integration with .NET and worked on database storage, retrieval, migration and basic data management tasks.",
+      tech: ["Vue.js", "Quasar Framework", ".NET", "Databases"]
+    },
     {
       company: "JMC Fleet Management Sdn Bhd",
       role: "Fullstack Developer Intern",
