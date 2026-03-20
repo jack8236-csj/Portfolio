@@ -27,7 +27,7 @@ export default function Navbar(){
         <div className="flex items-center gap-3">
 
           <a className="btn-accent hidden md:inline-flex items-center" 
-             href="/Resume- Chung Shi Jie.pdf" download>
+             href="/Resume- Chung Shi Jie (2).pdf" download>
             <FaDownload /> <span className="ml-1">Download CV</span>
           </a>
 
@@ -62,7 +62,7 @@ export default function Navbar(){
             <a href="#screens" onClick={() => setOpen(false)}>Screens</a>
             <a href="#contact" onClick={() => setOpen(false)}>Contact</a>
             <a className="btn-accent inline-flex items-center justify-center mt-2"
-               href="/Resume- Chung Shi Jie.pdf"
+               href="/Resume- Chung Shi Jie (2).pdf"
                download>
                Download CV
             </a>

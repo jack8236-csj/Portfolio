@@ -63,7 +63,7 @@ export default function Portfolio() {
           link: "/downloads/TrackPointFYP.apk"
         }
       ],
-      repo: "https://github.com/RobertLllllee/HuaChang" // <-- ADD YOUR ACTUAL REPO LINK HERE
+      repo: "https://github.com/RobertLllllee/HuaChang"
     },
 
     {

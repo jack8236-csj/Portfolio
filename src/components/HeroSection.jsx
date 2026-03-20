@@ -41,7 +41,7 @@ export default function HeroSection(){
           transition={{ delay: 0.28 }}
           className="mt-6 flex items-center justify-center gap-4"
         >
-          <a className="btn-accent" href="/Resume- Chung Shi Jie.pdf" download>Download CV</a>
+          <a className="btn-accent" href="/Resume- Chung Shi Jie (2).pdf" download>Download CV</a>
           <a className="px-4 py-2 rounded-md border border-gray-300 dark:border-white/10 text-sm text-slate-700 dark:text-slate-300" href="mailto:jackchung10@gmail.com">Contact</a>
         </motion.div>
 
