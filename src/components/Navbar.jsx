@@ -19,6 +19,7 @@ export default function Navbar(){
             <a href="#projects" className="hover:text-cyan-500 dark:hover:text-cyan-300">Projects</a>
             <a href="#skills" className="hover:text-cyan-500 dark:hover:text-cyan-300">Skills</a>
             <a href="#screens" className="hover:text-cyan-500 dark:hover:text-cyan-300">Screens</a>
+            <a href="#experience" className="hover:text-cyan-500 dark:hover:text-cyan-300">Experience</a>
             <a href="mailto:jackchung10@gmail.com" className="hover:text-cyan-500 dark:hover:text-cyan-300">Contact</a>
           </div>
         </div>
@@ -60,6 +61,7 @@ export default function Navbar(){
             <a href="#projects" onClick={() => setOpen(false)}>Projects</a>
             <a href="#skills" onClick={() => setOpen(false)}>Skills</a>
             <a href="#screens" onClick={() => setOpen(false)}>Screens</a>
+            <a href="#experience" onClick={() => setOpen(false)}>Experience</a>
             <a href="#contact" onClick={() => setOpen(false)}>Contact</a>
             <a className="btn-accent inline-flex items-center justify-center mt-2"
                href="/Resume- Chung Shi Jie (2).pdf"
