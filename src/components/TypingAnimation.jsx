@@ -1,23 +1,38 @@
 import React, { useEffect, useState } from "react";
 
-export default function TypingAnimation({ texts = ["Android • Web • Backend • UI/UX"], speed = 45 }){
-  const [i, setI] = useState(0);
-  const [pos, setPos] = useState(0);
+export default function TypingAnimation({ texts = [], speed = 40 }) {
+  const [index, setIndex] = useState(0);
+  const [position, setPosition] = useState(0);
   const [forward, setForward] = useState(true);
 
   useEffect(() => {
-    const txt = texts[i];
-    const t = setTimeout(() => {
-      if (forward) {
-        if (pos < txt.length) setPos(p => p + 1);
-        else setForward(false);
-      } else {
-        if (pos > 0) setPos(p => p - 1);
-        else { setForward(true); setI((i + 1) % texts.length); }
-      }
-    }, forward ? speed : Math.max(20, speed / 2));
-    return () => clearTimeout(t);
-  }, [pos, forward, i, texts, speed]);
+    if (!texts.length) return undefined;
 
-  return <span className="typing-caret">{texts[i].slice(0, pos)}</span>;
+    const current = texts[index];
+    const delay = forward ? speed : Math.max(22, speed / 2);
+
+    const timer = setTimeout(() => {
+      if (forward) {
+        if (position < current.length) {
+          setPosition((value) => value + 1);
+        } else {
+          setForward(false);
+        }
+        return;
+      }
+
+      if (position > 0) {
+        setPosition((value) => value - 1);
+      } else {
+        setForward(true);
+        setIndex((value) => (value + 1) % texts.length);
+      }
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [forward, index, position, speed, texts]);
+
+  if (!texts.length) return null;
+
+  return <span className="typing-caret">{texts[index].slice(0, position)}</span>;
 }

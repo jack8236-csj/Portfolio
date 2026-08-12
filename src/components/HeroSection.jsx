@@ -1,50 +1,101 @@
 import React from "react";
+import { motion as Motion } from "framer-motion";
+import { FaArrowRight, FaEnvelope } from "react-icons/fa";
 import TypingAnimation from "./TypingAnimation";
-import GradientBlob from "./GradientBlob";
-import TechBackground from "./TechBackground";
 
-import { motion } from "framer-motion";
+const metrics = [
+  { value: "2", label: "Internships completed" },
+  { value: "4", label: "Core areas across Android, web, backend, and UI/UX" },
+  { value: "2025", label: "Final-year product focused on field-sales operations" }
+];
 
-export default function HeroSection(){
+const strengths = [
+  "Builds practical interfaces for attendance, reporting, dashboards, and sales workflows.",
+  "Connects UI decisions with backend services, databases, Firebase, and location logic.",
+  "Brings internship exposure from CIBC Technology and JMC Fleet Management."
+];
+
+export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden py-28">
-<TechBackground />
-      <GradientBlob />
+    <section className="section-frame overflow-hidden px-6 py-8 sm:px-8 lg:px-10 lg:py-10">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-72 opacity-80"
+        style={{
+          background:
+            "radial-gradient(circle at 10% 20%, rgba(184,77,47,0.18), transparent 28%), radial-gradient(circle at 90% 10%, rgba(110,84,57,0.18), transparent 24%)"
+        }}
+      />
 
-      <div className="max-w-6xl mx-auto px-6 text-center">
+      <div className="relative grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+        <div className="space-y-6">
+          <span className="eyebrow">Software developer portfolio</span>
 
-        <motion.h1
-          initial={{ y: -8, opacity: 0 }}
-          animate={{ y:0, opacity:1 }}
-          transition={{ duration: 0.6 }}
-          className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-cyan-300"
-        >
-          Chung Shi Jie
-        </motion.h1>
+          <Motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55 }}
+            className="space-y-4"
+          >
+            <h1 className="max-w-4xl text-5xl leading-[0.95] sm:text-6xl lg:text-7xl">
+              A developer who turns operational problems into usable products.
+            </h1>
+            <p className="max-w-3xl text-lg leading-8 muted sm:text-xl">
+              Chung Shi Jie builds across Android, web, backend, and UI/UX, with hands-on
+              experience in Kotlin, Firebase, Flask, MySQL, Vue, Quasar, and .NET API integration.
+              His work is strongest where real workflows need clearer screens, reliable data, and
+              practical execution.
+            </p>
+          </Motion.div>
 
-        <motion.p 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
-          transition={{ delay: 0.18 }}
-          className="mt-4 text-lg text-slate-700 dark:text-slate-300"
-        >
-          <TypingAnimation texts={[
-            "Android • Web • Backend • UI/UX",
-            "Kotlin, Firebase, Google Maps",
-            "Flask, Python, Git, Figma"
-          ]} />
-        </motion.p>
+          <div className="pill w-fit">
+            <TypingAnimation
+              texts={[
+                "Android field-sales workflows, dashboards, and attendance tools.",
+                "Kotlin, Firebase, Flask, MySQL, Vue, Quasar, and Figma.",
+                "Product thinking backed by implementation and internship experience."
+              ]}
+              speed={34}
+            />
+          </div>
 
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
-          transition={{ delay: 0.28 }}
-          className="mt-6 flex items-center justify-center gap-4"
-        >
-          <a className="btn-accent" href="/Resume- Chung Shi Jie (2).pdf" download>Download CV</a>
-          <a className="px-4 py-2 rounded-md border border-gray-300 dark:border-white/10 text-sm text-slate-700 dark:text-slate-300" href="mailto:jackchung10@gmail.com">Contact</a>
-        </motion.div>
+          <div className="flex flex-wrap gap-3">
+            <a className="btn-primary" href="#projects">
+              Review selected work
+              <FaArrowRight />
+            </a>
+            <a className="btn-secondary" href="mailto:jackchung10@gmail.com">
+              <FaEnvelope />
+              Contact candidate
+            </a>
+            <a className="btn-secondary" href="#skills">
+              Review capabilities
+            </a>
+          </div>
+        </div>
 
+        <div className="grid gap-4">
+          <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+            {metrics.map((item) => (
+              <div key={item.label} className="metric-card">
+                <p className="metric-value font-semibold">{item.value}</p>
+                <p className="mt-2 text-sm leading-6 muted">{item.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="metric-card">
+            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--accent)]">
+              Profile readout
+            </p>
+            <h2 className="mt-3 text-2xl">What his background shows</h2>
+            <div className="mt-4 space-y-3 text-sm leading-7 muted">
+              {strengths.map((item) => (
+                <p key={item}>{item}</p>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -1,133 +1,103 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 import ProjectModal from "./ProjectModal";
 
 export default function ProjectsGrid({ items = [] }) {
   const [selected, setSelected] = useState(null);
-  const [open, setOpen] = useState(false);
 
   if (!items.length) return null;
 
-  const openProject = (p) => {
-    setSelected(p);
-    setOpen(true);
+  const openProject = (project) => {
+    setSelected(project);
     document.body.style.overflow = "hidden";
   };
 
   const closeProject = () => {
-    setOpen(false);
-    setTimeout(() => setSelected(null), 260);
+    setSelected(null);
     document.body.style.overflow = "";
-  };
-
-  // helper to detect video links
-  const isVideo = (url = "") => {
-    try {
-      return (
-        url.toLowerCase().endsWith(".mp4") ||
-        url.toLowerCase().endsWith(".webm") ||
-        url.toLowerCase().endsWith(".ogg")
-      );
-    } catch {
-      return false;
-    }
   };
 
   return (
     <>
-      <div className="grid gap-10">
-        {items.map((p, idx) => (
+      <div className="grid gap-6">
+        {items.map((project, index) => (
           <motion.article
-            key={idx}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.06, type: "spring", stiffness: 160 }}
-            className="glass p-6 neon-outline flex flex-col md:flex-row gap-8 items-center"
+            key={project.title}
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ delay: index * 0.07, duration: 0.35 }}
+            className="grid-card grid gap-6 overflow-hidden p-5 lg:grid-cols-[0.9fr_1.1fr] lg:p-6"
           >
-            {/* IMAGE */}
-            <div className="w-full md:w-1/3">
-              <div className="rounded-lg overflow-hidden shadow-lg bg-gray-200 dark:bg-black/20 aspect-[4/3] max-h-[260px] flex items-center justify-center">
-                <img src={p.images[0]} alt={p.title} className="w-full h-full object-cover" />
+            <button
+              type="button"
+              onClick={() => openProject(project)}
+              className="group relative overflow-hidden rounded-[22px] border border-[var(--line)] bg-[var(--surface)] text-left"
+            >
+              <img
+                src={project.images[0]}
+                alt={project.title}
+                className="h-full min-h-[260px] w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-5 text-white">
+                <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-white/70">
+                  {project.client}
+                </p>
+                <p className="mt-2 text-lg font-semibold">{project.title}</p>
               </div>
-            </div>
+            </button>
 
-            {/* CONTENT */}
-            <div className="flex-1">
-              <h3 className="text-2xl font-semibold text-slate-900 dark:text-cyan-300">
-                {p.title}
-              </h3>
-              <p className="mt-3 text-slate-700 dark:text-slate-300">{p.desc}</p>
+            <div className="flex flex-col justify-between gap-6">
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center gap-3 text-sm font-semibold muted">
+                  <span>{project.year}</span>
+                  <span className="h-1 w-1 rounded-full bg-[var(--text-soft)]" />
+                  <span>{project.client}</span>
+                </div>
 
-              <div className="mt-4 flex flex-wrap gap-3">
-                {(p.tech || []).map((t, i) => (
-                  <span
-                    key={i}
-                    className="px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-slate-200 text-sm"
-                  >
-                    {t}
-                  </span>
-                ))}
+                <div>
+                  <h3 className="text-3xl">{project.title}</h3>
+                  <p className="mt-3 text-base leading-8 muted">{project.desc}</p>
+                  <p className="mt-3 text-base leading-8 text-[var(--text-main)]">
+                    {project.outcome}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2.5">
+                  {project.tech.map((item) => (
+                    <span key={item} className="pill">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="grid gap-3 text-sm leading-7 muted">
+                  {project.highlights.map((point) => (
+                    <p key={point}>{point}</p>
+                  ))}
+                </div>
               </div>
 
-              <div className="mt-5 flex gap-3 items-center flex-wrap">
-                {/* === PROJECT HAS DEMO BUTTONS === */}
-                {p.demoButtons?.length ? (
-                  <>
-                    {/* FIRST DEMO BUTTON — VIDEO CASE */}
-                    {isVideo(p.demoButtons[0]?.link) ? (
-                      <a
-                        className="btn-accent"
-                        href={p.demoButtons[0].link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {p.demoButtons[0]?.label ?? "View Demo"}
-                      </a>
-                    ) : (
-                      <button
-                        className="btn-accent clickable"
-                        onClick={() => openProject(p)}
-                      >
-                        {p.demoButtons[0]?.label ?? "View Demo"}
-                      </button>
-                    )}
-
-                    {/* SECONDARY BUTTON (Install APK) */}
-                    {p.demoButtons[1] && (
-                      <a
-                        className="btn-secondary"
-                        href={p.demoButtons[1].link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        {...(p.demoButtons[1].link.toLowerCase().endsWith(".apk")
-                          ? { download: true }
-                          : {})}
-                      >
-                        {p.demoButtons[1].label}
-                      </a>
-                    )}
-
-                    {/* NEW — VIEW REPO BUTTON (now btn-secondary style) */}
-                    {p.repo && (
-                      <a
-                        className="btn-secondary"
-                        href={p.repo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        View Repo
-                      </a>
-                    )}
-                  </>
-                ) : (
-                  /* === NO DEMO BUTTONS — SHOW REPO ONLY === */
+              <div className="flex flex-wrap gap-3">
+                <button type="button" className="btn-primary" onClick={() => openProject(project)}>
+                  Open case overview
+                </button>
+                {project.demoButtons[0] && (
                   <a
                     className="btn-secondary"
-                    href={p.repo ?? "#"}
+                    href={project.demoButtons[0].link}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noreferrer"
                   >
-                    View Repo
+                    <FaExternalLinkAlt />
+                    {project.demoButtons[0].label}
+                  </a>
+                )}
+                {project.repo && (
+                  <a className="btn-secondary" href={project.repo} target="_blank" rel="noreferrer">
+                    <FaGithub />
+                    Repository
                   </a>
                 )}
               </div>
@@ -136,8 +106,9 @@ export default function ProjectsGrid({ items = [] }) {
         ))}
       </div>
 
-      {/* MODAL */}
-      <ProjectModal open={open} onClose={closeProject} project={selected} />
+      <AnimatePresence>
+        {selected && <ProjectModal open project={selected} onClose={closeProject} />}
+      </AnimatePresence>
     </>
   );
 }

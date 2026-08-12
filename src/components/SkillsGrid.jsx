@@ -1,49 +1,32 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-/**
- * Props:
- *  - skills: array of { id, name, Icon, short, desc }
- *  - onOpenSkill: (skill) => void
- */
 export default function SkillsGrid({ skills = [], onOpenSkill = () => {} }) {
   if (!skills.length) return null;
 
   return (
-    <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-6">
-      {skills.map((s, i) => {
-        const Icon = s.Icon;
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      {skills.map((skill, index) => {
+        const Icon = skill.Icon;
+
         return (
           <motion.button
-            key={s.id || i}
-            onClick={() => onOpenSkill(s)}
-            whileHover={{ y: -6, scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05 }}
-            className="relative group focus:outline-none"
-            aria-label={s.name}
-            title={s.name}
+            key={skill.id || index}
+            type="button"
+            onClick={() => onOpenSkill(skill)}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ delay: index * 0.03, duration: 0.28 }}
+            className="grid-card flex items-start gap-4 p-5 text-left"
           >
-            {/* Rounded tile */}
-            <div
-              className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-xl glass neon-outline
-                         transition-shadow duration-200 cursor-pointer"
-              // keyboard accessible
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === "Enter") onOpenSkill(s); }}
-            >
-              <Icon className="text-3xl md:text-4xl text-[--accent-cyan]" />
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-[var(--accent)]">
+              <Icon className="text-2xl" />
             </div>
 
-            {/* Tooltip */}
-            <div
-              className="absolute left-1/2 -translate-x-1/2 -bottom-10 pointer-events-none opacity-0 group-hover:opacity-100
-                         transition-opacity duration-150 bg-black/70 text-white text-xs rounded-md px-2 py-1"
-              style={{ transformOrigin: "center" }}
-            >
-              {s.name}
+            <div>
+              <p className="text-base font-extrabold">{skill.name}</p>
+              <p className="mt-2 text-sm leading-7 muted">{skill.desc}</p>
             </div>
           </motion.button>
         );

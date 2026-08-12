@@ -1,24 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 
-export default function ThemeToggle(){
+export default function ThemeToggle() {
   const [dark, setDark] = useState(() => {
     try {
-      const s = localStorage.getItem("theme");
-      if (s) return s === "dark";
-      return true;
-    } catch { return true; }
+      const stored = localStorage.getItem("theme");
+      if (stored) return stored === "dark";
+    } catch {
+      return false;
+    }
+
+    return false;
   });
 
   useEffect(() => {
-    if (dark) document.documentElement.classList.add("dark");
-    else document.documentElement.classList.remove("dark");
-    try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch {}
+    document.documentElement.classList.toggle("dark", dark);
+    try {
+      localStorage.setItem("theme", dark ? "dark" : "light");
+    } catch {
+      // Ignore localStorage availability issues.
+    }
   }, [dark]);
 
   return (
-    <button onClick={() => setDark(d => !d)} className="p-2 rounded-md bg-black/30 border border-cyan-900/10 text-slate-200">
+    <button
+      type="button"
+      onClick={() => setDark((value) => !value)}
+      className="pill"
+      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      title={dark ? "Switch to light mode" : "Switch to dark mode"}
+    >
       {dark ? <FaSun /> : <FaMoon />}
+      <span>{dark ? "Light" : "Dark"}</span>
     </button>
   );
 }

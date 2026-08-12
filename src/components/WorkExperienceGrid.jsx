@@ -5,47 +5,37 @@ export default function WorkExperienceGrid({ items = [] }) {
   if (!items.length) return null;
 
   return (
-    <div className="grid gap-10">
-      {items.map((exp, idx) => (
+    <div className="grid gap-5">
+      {items.map((item, index) => (
         <motion.article
-          key={idx}
+          key={item.company}
           initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: idx * 0.06, type: "spring", stiffness: 160 }}
-          className="glass p-6 neon-outline flex flex-col md:flex-row gap-8 items-center"
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.28 }}
+          transition={{ delay: index * 0.06, duration: 0.3 }}
+          className="grid-card grid gap-5 p-5 lg:grid-cols-[220px_1fr]"
         >
-          {/* LOGO */}
-          <div className="w-full md:w-1/3">
-            <div className="rounded-lg overflow-hidden shadow-lg bg-gray-200 dark:bg-black/20 aspect-[4/3] max-h-[260px] flex items-center justify-center">
-              <img
-                src={exp.logo}
-                alt={exp.company}
-                className="w-full h-full object-contain p-4"
-              />
-            </div>
+          <div className="flex items-center justify-center rounded-[22px] border border-[var(--line)] bg-[var(--panel-strong)] p-6">
+            <img src={item.logo} alt={item.company} className="max-h-24 w-full object-contain" />
           </div>
 
-          {/* CONTENT */}
-          <div className="flex-1">
-            <h3 className="text-2xl font-semibold text-slate-900 dark:text-cyan-300">
-              {exp.company}
-            </h3>
+          <div className="space-y-4">
+            <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <h3 className="text-3xl">{item.company}</h3>
+                <p className="mt-2 text-sm font-bold uppercase tracking-[0.12em] text-[var(--accent)]">
+                  {item.role}
+                </p>
+              </div>
+              <p className="text-sm font-semibold muted">{item.period}</p>
+            </div>
 
-            <p className="text-slate-500 dark:text-slate-300 mt-1">
-              <strong>{exp.role}</strong> • {exp.period}
-            </p>
+            <p className="text-base leading-8 muted">{item.desc}</p>
 
-            <p className="mt-3 text-slate-700 dark:text-slate-300">
-              {exp.desc}
-            </p>
-
-            <div className="mt-4 flex flex-wrap gap-3">
-              {exp.tech.map((t, i) => (
-                <span
-                  key={i}
-                  className="px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-slate-200 text-sm"
-                >
-                  {t}
+            <div className="flex flex-wrap gap-2.5">
+              {item.tech.map((tech) => (
+                <span key={tech} className="pill">
+                  {tech}
                 </span>
               ))}
             </div>

@@ -1,72 +1,97 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaTimes } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaExternalLinkAlt, FaGithub, FaTimes } from "react-icons/fa";
 
 export default function ProjectModal({ open, onClose, project }) {
-  if (!project) return null;
+  if (!open || !project) return null;
 
-  const media = project.images?.[0] ?? null;
-  const video = project.video ?? null;
+  const secondaryDemo = project.demoButtons?.[1];
 
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          className="modal-backdrop"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={(e) => { if (e.target.classList.contains("modal-backdrop")) onClose(); }}
-        >
-          <motion.div
-            className="modal-card relative"
-            initial={{ scale: 0.96, y: 10, opacity: 0 }}
-            animate={{ scale: 1, y: 0, opacity: 1 }}
-            exit={{ scale: 0.98, y: 8, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 400, damping: 28 }}
-            role="dialog"
-            aria-modal="true"
-          >
-            <button className="modal-close" onClick={onClose} aria-label="Close">
-              <FaTimes />
-            </button>
+    <motion.div
+      className="modal-backdrop"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={(event) => {
+        if (event.target.classList.contains("modal-backdrop")) onClose();
+      }}
+    >
+      <motion.div
+        className="modal-card"
+        initial={{ opacity: 0, y: 18, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 12, scale: 0.98 }}
+        transition={{ duration: 0.24 }}
+      >
+        <button type="button" className="modal-close" onClick={onClose} aria-label="Close dialog">
+          <FaTimes />
+        </button>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="modal-media">
-                {video ? (
-                  <video controls src={video} />
-                ) : media ? (
-                  <img src={media} alt={project.title} />
-                ) : null}
-              </div>
+        <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr]">
+          <div className="overflow-hidden rounded-[22px] border border-[var(--line)] bg-[var(--surface)]">
+            <img src={project.images[0]} alt={project.title} className="h-full w-full object-cover" />
+          </div>
 
-              <div>
-                <h3 className="text-2xl font-semibold text-cyan-300 mb-2">{project.title}</h3>
-                <p className="text-slate-300 mb-4">{project.desc}</p>
-
-                <div className="flex flex-wrap gap-3 mb-4">
-                  {(project.tech || []).map((t, i) => (
-                    <span key={i} className="px-3 py-1 rounded-full bg-cyan-900/30 text-slate-200 text-sm">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex gap-3">
-                  {project.demoButtons?.map((btn, i) => (
-                    <a key={i} className="btn-accent" href={btn.link} target="_blank" rel="noreferrer">{btn.label}</a>
-                  ))}
-
-                  {project.repo && (
-                    <a className="px-3 py-2 rounded-md border border-white/10 text-sm text-gray-300" href={project.repo} target="_blank" rel="noreferrer">Repo</a>
-                  )}
-                </div>
-              </div>
+          <div className="flex flex-col gap-5 pr-8">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--accent)]">
+                {project.client}
+              </p>
+              <h3 className="mt-3 text-3xl">{project.title}</h3>
+              <p className="mt-4 text-base leading-8 muted">{project.desc}</p>
+              <p className="mt-4 text-base leading-8">{project.outcome}</p>
             </div>
 
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+            <div className="flex flex-wrap gap-2.5">
+              {(project.tech || []).map((item) => (
+                <span key={item} className="pill">
+                  {item}
+                </span>
+              ))}
+            </div>
+
+            <div className="space-y-3 text-sm leading-7 muted">
+              {project.highlights?.map((point) => (
+                <p key={point}>{point}</p>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-3 pt-2">
+              {project.demoButtons?.[0] && (
+                <a
+                  className="btn-primary"
+                  href={project.demoButtons[0].link}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FaExternalLinkAlt />
+                  {project.demoButtons[0].label}
+                </a>
+              )}
+
+              {secondaryDemo && (
+                <a
+                  className="btn-secondary"
+                  href={secondaryDemo.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  {...(secondaryDemo.link.toLowerCase().endsWith(".apk") ? { download: true } : {})}
+                >
+                  {secondaryDemo.label}
+                </a>
+              )}
+
+              {project.repo && (
+                <a className="btn-secondary" href={project.repo} target="_blank" rel="noreferrer">
+                  <FaGithub />
+                  View repository
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }

@@ -10,53 +10,28 @@ export default function SkillModal({ skill, onClose }) {
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <motion.div
-        className="modal-card relative"
-        onClick={(e) => e.stopPropagation()}
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.95, opacity: 0 }}
-        transition={{ duration: 0.18 }}
+        className="modal-card max-w-2xl"
+        onClick={(event) => event.stopPropagation()}
+        initial={{ opacity: 0, y: 18, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 10, scale: 0.98 }}
+        transition={{ duration: 0.22 }}
       >
-        {/* Close Button */}
-        <button className="modal-close" onClick={onClose} aria-label="Close">
+        <button type="button" className="modal-close" onClick={onClose} aria-label="Close dialog">
           <FaTimes />
         </button>
 
-        <div className="flex flex-col md:flex-row gap-6">
-          
-          {/* Icon Box */}
-          <div className="flex-shrink-0 flex items-center justify-center w-32 h-32 rounded-xl 
-                          bg-gradient-to-br from-[--accent-cyan] to-[--accent-purple] 
-                          text-white shadow-lg">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+          <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-[26px] bg-[var(--accent-soft)] text-[var(--accent)]">
             <Icon className="text-4xl" />
           </div>
 
-          {/* Content */}
-          <div className="flex-1">
-            <h3 className="text-2xl font-semibold text-[--accent-cyan]">
-              {skill.name}
-            </h3>
-
-            {/* UPDATED DESCRIPTION TEXT HERE */}
-            <p className="mt-3 text-slate-700 dark:text-slate-300 leading-relaxed">
-              {skill.desc}
+          <div className="space-y-4 pr-8">
+            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--accent)]">
+              Skill focus
             </p>
-
-            {skill.links && skill.links.length > 0 && (
-              <div className="mt-4 flex gap-3 flex-wrap">
-                {skill.links.map((ln, idx) => (
-                  <a
-                    key={idx}
-                    href={ln.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-accent"
-                  >
-                    {ln.label}
-                  </a>
-                ))}
-              </div>
-            )}
+            <h3 className="text-3xl">{skill.name}</h3>
+            <p className="text-base leading-8 muted">{skill.desc}</p>
           </div>
         </div>
       </motion.div>
